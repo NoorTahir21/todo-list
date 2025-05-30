@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-gradient-to-br from-purple-100 to-blue-100 min-h-screen p-6">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-bold text-purple-700 mb-2">
+          📝 My To-Do List
+        </h1>
+        <p class="text-gray-500">
+          Organize your tasks by category and stay productive!
+        </p>
+      </div>
+
+      <div
+        id="quote"
+        class="bg-yellow-50 border-l-4 border-yellow-400 text-yellow-700 p-4 rounded-md shadow"
+      >
+        <p class="italic">
+          “Stay focused and never give up.” – Placeholder Quote
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-4 items-stretch">
+        <form
+          class="flex gap-4 flex-wrap items-center"
+          onsubmit="event.preventDefault();onformSubmit();"
+          autocomplete="off"
+        >
+          <input
+            id="taskinput"
+            type="text"
+            placeholder="Enter a new task..."
+            class="flex-1 border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+          />
+          <select
+            id="category-select"
+            class="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+          >
+            <option value="">Select Category</option>
+            <option value="Work">Work</option>
+            <option value="Personal">Personal</option>
+            <option value="Learning">Learning</option>
+          </select>
+          <div class="submit-action">
+            <input
+              id="add-task"
+              type="submit"
+              value="Add"
+              class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
+            />
+          </div>
+        </form>
+      </div>
+
+      <div>
+        <label
+          for="filter-category"
+          class="block text-sm font-medium text-gray-600 mb-2"
+          >Filter by Category:</label
+        >
+        <select
+          id="filter-category"
+          class="w-50 border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
+        >
+          <option value="all">All</option>
+          <option value="Work">Work</option>
+          <option value="Personal">Personal</option>
+          <option value="Learning">Learning</option>
+        </select>
+
+        <input
+          onclick="taskfilter();"
+          id="filter-task"
+          type="submit"
+          value="Filter"
+          class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
+        />
+      </div>
+
+      <ul id="tasklist" class="space-y-4"></ul>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
