@@ -118,3 +118,36 @@ function loadTasksFromLocalStorage() {
   tasks.forEach((task) => insertNewTask(task));
 }
 window.addEventListener("DOMContentLoaded", loadTasksFromLocalStorage);
+
+// quotes fetching
+const quotesForm = document.getElementById("quote");
+quotesForm.addEventListener("submit", async function (event) {
+  event.preventDefault();
+
+  const apiURL = "https://dummyjson.com/quotes";
+
+  try {
+    const res = await fetch(apiURL);
+    const data = await res.json();
+
+    if (res.ok && data.quotes && data.quotes.length > 0) {
+      const quote = data.quotes[Math.floor(Math.random() * data.quotes.length)];
+      displayQuote(quote.quote, quote.author);
+    } else {
+      displayError("No quotes found.");
+    }
+  } catch (error) {
+    console.log(error);
+    displayError("Failed to fetch quote.");
+  }
+});
+
+function displayQuote(quote, author) {
+  const output = document.getElementById("quote-output");
+  output.innerHTML = `"${quote}"<br><span class="text-sm text-gray-500">– ${author}</span>`;
+}
+
+function displayError(msg) {
+  const output = document.getElementById("quote-output");
+  output.innerHTML = `<span class="text-red-500">${msg}</span>`;
+}
