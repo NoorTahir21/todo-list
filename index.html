@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do List</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
@@ -37,10 +35,11 @@
         </p>
       </div>
 
+      <!-- Task Input Form -->
       <div class="flex flex-col md:flex-row gap-4 items-stretch">
         <form
           class="flex gap-4 flex-wrap items-center"
-          onsubmit="event.preventDefault();onformSubmit();"
+          onsubmit="event.preventDefault(); onformSubmit();"
           autocomplete="off"
         >
           <input
@@ -58,17 +57,16 @@
             <option value="Personal">Personal</option>
             <option value="Learning">Learning</option>
           </select>
-          <div class="submit-action">
-            <input
-              id="add-task"
-              type="submit"
-              value="Add"
-              class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
-            />
-          </div>
+          <input
+            id="add-task"
+            type="submit"
+            value="Add"
+            class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
+          />
         </form>
       </div>
 
+      <!-- Filter Section -->
       <div>
         <label
           for="filter-category"
@@ -84,16 +82,16 @@
           <option value="Personal">Personal</option>
           <option value="Learning">Learning</option>
         </select>
-
         <input
           onclick="taskfilter();"
           id="filter-task"
           type="submit"
           value="Filter"
-          class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition"
+          class="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition mt-2"
         />
       </div>
 
+      <!-- Task List -->
       <ul id="tasklist" class="space-y-4"></ul>
     </div>
     <script src="script.js"></script>

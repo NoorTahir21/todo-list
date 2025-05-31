@@ -46,9 +46,10 @@ function insertNewTask(data) {
   `;
 
   taskList.appendChild(taskItem);
+  saveTasksToLocalStorage();
 }
 
-//edit current task
+//edit task
 function onEdit(btn) {
   const li = btn.closest("li");
   const taskText = li.querySelector(".task-text").textContent;
@@ -64,13 +65,14 @@ function onEdit(btn) {
   currentEditItem = li;
 }
 
-//update current task
+//update task
 function updateTask(data) {
   if (currentEditItem) {
     currentEditItem.querySelector(".task-text").textContent = data.taskinput;
     currentEditItem.querySelector(
       ".task-category"
     ).textContent = `Category: ${data.category}`;
+    saveTasksToLocalStorage();
   }
 }
 
@@ -78,23 +80,41 @@ function updateTask(data) {
 function onDelete(btn) {
   const li = btn.closest("li");
   li.remove();
+  saveTasksToLocalStorage();
 }
 
 //filter categories
-
 function taskfilter() {
-  const categoryinput = document.getElementById("filter-category").value;
-  const categoryItems = categoryinput.getElementsByTagName("option");
+  const selectedCategory = document.getElementById("filter-category").value;
+  const tasks = document.querySelectorAll("#tasklist li");
 
-  categoryinput.addEventListener("select", function () {
-    const filter = select.value.toUpperCase();
-    for (let item of categoryItems) {
-      const text = item.textContent.toUpperCase();
-      if (text.indexOf(filter) > -1) {
-        item.style.display = "";
-      } else {
-        item.style.display = "none";
-      }
+  tasks.forEach((task) => {
+    const categoryText = task.querySelector(".task-category").textContent;
+    const taskCategory = categoryText.replace("Category: ", "");
+
+    if (selectedCategory === "all" || taskCategory === selectedCategory) {
+      task.style.display = "flex";
+    } else {
+      task.style.display = "none";
     }
   });
 }
+
+//store task in local storage
+function saveTasksToLocalStorage() {
+  const tasks = [];
+  document.querySelectorAll("#tasklist li").forEach((li) => {
+    const taskText = li.querySelector(".task-text").textContent;
+    const taskCategory = li
+      .querySelector(".task-category")
+      .textContent.replace("Category: ", "");
+    tasks.push({ taskinput: taskText, category: taskCategory });
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasksFromLocalStorage() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.forEach((task) => insertNewTask(task));
+}
+window.addEventListener("DOMContentLoaded", loadTasksFromLocalStorage);
